@@ -3,26 +3,24 @@ import string
 
 
 def main():
-    lowercase_letters = list(string.ascii_lowercase)
-    uppercase_letters = list(string.ascii_uppercase)
-    digits = list(string.digits)
-    special_chars = list(string.punctuation)
-    pre_password = ""
-    for i in range(0, 16):
-        if i < 4:
-            pre_password += secrets.choice(lowercase_letters)
-        elif i < 8:
-            pre_password += secrets.choice(uppercase_letters)
-        elif i < 12:
-            pre_password += secrets.choice(digits)
-        else:
-            pre_password += secrets.choice(special_chars)
-    password_set = set(pre_password)
+    pre_password_set = set()
+    pre_password_set_lower = set()
+    pre_password_set_upper = set()
+    pre_password_set_digits = set()
+    pre_password_set_spchars = set()
+    while len(pre_password_set_lower) < 4:
+        pre_password_set_lower.add(secrets.choice(string.ascii_lowercase))
+    while len(pre_password_set_upper) < 4:
+        pre_password_set_upper.add(secrets.choice(string.ascii_uppercase))
+    while len(pre_password_set_digits) < 4:
+        pre_password_set_digits.add(secrets.choice(string.digits))
+    while len(pre_password_set_spchars) < 4:
+        pre_password_set_spchars.add(secrets.choice(string.punctuation))       
+    pre_password_set.update(pre_password_set_spchars, pre_password_set_digits, pre_password_set_upper, pre_password_set_lower)
     post_password = ""
-    for i in password_set:
+    for i in pre_password_set:
         post_password += i
     print(post_password)
-
 
 
 if __name__ == "__main__":
